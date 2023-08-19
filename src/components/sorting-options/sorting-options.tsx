@@ -1,12 +1,12 @@
 import { SortingType } from '../../const';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useState } from 'react';
-import { getSortingType } from '../../store/offers-process/offers-process.selector';
+import { changeSortingType } from '../../store/action';
+import { useRef } from 'react';
 
-function SortingOptions(): JSX.Element {
-  const activeSortingType = useAppSelector(getSortingType);
-  const [isOpened, setIsOpened] = useState(false);
+function SortingOption(): JSX.Element {
+  const sortingListRef = useRef<HTMLUListElement | null>(null);
+  const activeSortingType = useAppSelector((state) => state.sortingType);
   const dispatch = useAppDispatch();
 
   const handleSortingClick = (type: SortingType) => {
@@ -14,15 +14,15 @@ function SortingOptions(): JSX.Element {
   };
 
   return (
-    <form className="places__sorting" action="#" method="get" >
+    <form className="places__sorting" action="#" method="get" onClick={() => sortingListRef.current?.classList.toggle('places__options--opened')}>
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0} onClick={() => setIsOpened((option) => !option)}>
+      <span className="places__sorting-type" tabIndex={0}>
         {activeSortingType}
         <svg className="places__sorting-arrow" width="7" height="4" >
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={classNames('places__options', 'places__options--custom', {'places__options--opened':isOpened})} onClick={() => setIsOpened((option) => !option)}>
+      <ul className="places__options places__options--custom" ref={sortingListRef}>
         {Object.values(SortingType).map((type) => (
           <li key={type} onClick={() => handleSortingClick(type)} className={classNames('places__option', {'places__option--active': type === activeSortingType})} tabIndex={0}>
             {type}
@@ -32,4 +32,4 @@ function SortingOptions(): JSX.Element {
   );
 }
 
-export default SortingOptions;
+export default SortingOption;
