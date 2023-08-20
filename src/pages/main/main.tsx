@@ -24,11 +24,10 @@ function WelcomeScreen({offers, cities}: WelcomeScreenProps): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
   const handlePlaceCardHover = (point: Offer) => {
-    const currentPoint = offers.find((offer) => offers.id === point.id);
+    const currentPoint = offers.find((offer) => offer.id === point.id);
 
     setSelectedOffer(currentPoint);
   };
-
 
   return (
     <div className="page page--gray page--main">
@@ -61,12 +60,12 @@ function WelcomeScreen({offers, cities}: WelcomeScreenProps): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{currentOffers.length} places to stay in {city}</b>
-              <Sorting />
+              <SortingOptions />
               <PlaceCardList offers={currentOffers} onPlaceCardHover={handlePlaceCardHover}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-               <Map offers={currentOffers} selectOffer={selectedOffer} />
+                <Map offers={currentOffers} selectedOffer={selectedOffer} />
               </section>
             </div>
           </div>
