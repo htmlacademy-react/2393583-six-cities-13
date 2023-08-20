@@ -1,4 +1,5 @@
 import { Icon, Marker, layerGroup } from 'leaflet';
+import './map.css';
 import 'leaflet/dist/leaflet.css';
 import { useRef, useEffect } from 'react';
 import useMap from '../../hooks/useMap';
@@ -54,6 +55,7 @@ function Map({offers, selectOffer}: MapProps): JSX.Element {
             : defaultCustomIcon)
           .addTo(markerLayer);
       });
+
       return () => {
         map.removeLayer(markerLayer);
       };

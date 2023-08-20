@@ -1,19 +1,20 @@
+import { Helmet } from 'react-helmet-async';
+import { useAppSelector } from '../../hooks';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import Sign from '../../components/sign/sign';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
-import { Offer } from '../../types/offer';
-import { Helmet } from 'react-helmet-async';
-import { useAppSelector } from '../../hooks';
 import CitiesList from '../../components/cities-list/cities-list';
-import { sorting } from '../../ultils';
+import SortingOption from '../../components/sorting-options/sorting-options';
+import { Offer } from '../../types/offer';
 import { CITIES } from '../../const';
-import SortingOptions from '../../components/sorting-options/sorting-options';
+import { sorting } from '../../ultils';
+import { useState } from 'react';
 
 type WelcomeScreenProps = {
-    cities: typeof CITIES;
     offers: Offer[];
+    cities: typeof CITIES;
 }
 
 function WelcomeScreen({offers, cities}: WelcomeScreenProps): JSX.Element {
@@ -60,12 +61,12 @@ function WelcomeScreen({offers, cities}: WelcomeScreenProps): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{currentOffers.length} places to stay in {city}</b>
-              <SortingOptions />
+              <SortingOption />
               <PlaceCardList offers={currentOffers} onPlaceCardHover={handlePlaceCardHover}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={currentOffers} selectedOffer={selectedOffer} />
+                <Map offers={currentOffers} selectOffer={selectedOffer} />
               </section>
             </div>
           </div>
